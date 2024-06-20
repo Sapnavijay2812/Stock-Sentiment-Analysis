@@ -23,8 +23,6 @@ The **Stock Sentiment Analysis Using Machine Learning Techniques** project aims 
 - [Data Preprocessing](#data-preprocessing)
 - [Model Training](#model-training)
 - [Evaluation](#evaluation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
@@ -88,7 +86,3 @@ Evaluate the trained model using various metrics to assess its performance. Key 
 - **Precision, Recall, and F1-Score:** Metrics to evaluate the model's performance on positive and negative classes.
 - **Confusion Matrix:** A table to visualize the performance of the classification model.
 
-
-
-
-For any questions or support, please contact [your email].
