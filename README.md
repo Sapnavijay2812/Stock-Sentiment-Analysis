@@ -1,88 +1,89 @@
-# Stock Sentiment Analysis Using Machine Learning Techniques (#FC24OPS3)
+# Stock Sentiment Analysis
 
-## Overview
-
-The **Stock Sentiment Analysis Using Machine Learning Techniques** project aims to develop a robust sentiment analysis model that predicts the movement of stock prices based on textual data from news articles, social media posts, and other financial news and opinion sources. By analyzing the sentiment expressed in these texts, the model will seek to uncover insights into investor sentiment and market sentiment, providing valuable indicators for making informed trading decisions.
-
-## Objectives
-
-1. **Data Collection:**
-    - Gather a large dataset of textual data related to stocks.
-    - Sources include news articles, social media posts, earnings reports, and analyst reports.
-
-2. **Data Preprocessing:**
-    - Remove noise from the textual data.
-    - Tokenize text into words or phrases.
-    - Apply techniques such as stemming and lemmatization to standardize text representations.
+This project analyzes stock market sentiment based on historical data using Natural Language Processing (NLP) techniques and machine learning algorithms. A Random Forest Classifier is used to predict stock movements based on news headlines.
 
 ## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Data Collection](#data-collection)
-- [Data Preprocessing](#data-preprocessing)
-- [Model Training](#model-training)
+- [Dataset](#dataset)
+- [Preprocessing](#preprocessing)
+- [Feature Extraction](#feature-extraction)
+- [Model Implementation](#model-implementation)
 - [Evaluation](#evaluation)
+- [Usage](#usage)
 
-## Installation
+## Dataset
+The dataset contains stock market news headlines and corresponding labels:
+- **Date**: Date of the news headlines.
+- **Headlines**: 25 news headlines for a given date.
+- **Label**: Binary labels indicating stock movement (1: Positive, 0: Negative).
 
-To get started with the project, clone the repository and install the necessary dependencies.
+Ensure the dataset file (`Data3.csv`) is encoded in `ISO-8859-1` and located in the specified path.
 
-```
-git clone https://github.com/yourusername/StockSentimentAnalysis.git
-cd StockSentimentAnalysis
-pip install -r requirements.txt
-```
+## Preprocessing
+1. Split the dataset into training and testing sets:
+   - Training set: News before `20150101`.
+   - Testing set: News after `20141231`.
 
-## Usage
+2. Clean the text data:
+   - Remove punctuations and non-alphabetical characters.
+   - Convert all text to lowercase for consistency.
 
-1. **Data Collection:**
-    - Execute the `data_collection.py` script to collect data from various sources.
-    - Ensure you have the necessary API keys and access credentials for the data sources.
+3. Combine all 25 headlines for each date into a single string.
 
-2. **Data Preprocessing:**
-    - Run the `preprocessing.py` script to clean and preprocess the collected textual data.
-    - The script will remove noise, tokenize text, and standardize text representations.
+## Feature Extraction
+- **Bag of Words (BOW)**:
+  - Use `CountVectorizer` with bigrams (`ngram_range=(2,2)`) to transform text data into feature vectors.
 
-3. **Model Training:**
-    - Use the `train_model.py` script to train the sentiment analysis model on the preprocessed data.
-    - Configure the model parameters and training settings as needed.
-
-4. **Evaluation:**
-    - Evaluate the model's performance using the `evaluate_model.py` script.
-    - The script will generate performance metrics and visualizations to assess the model's accuracy and effectiveness.
-
-## Data Collection
-
-The data collection process involves gathering textual data related to stocks from various sources. This includes:
-
-- **News Articles:** Scrape or use APIs to collect news articles related to specific stocks or the stock market in general.
-- **Social Media Posts:** Collect posts from platforms like Twitter and Reddit that discuss stock market opinions and sentiments.
-- **Earnings Reports:** Gather earnings reports from company websites and financial databases.
-- **Analyst Reports:** Collect reports from financial analysts that provide insights and predictions about stock performance.
-
-## Data Preprocessing
-
-Preprocessing the collected textual data is crucial for improving the accuracy of the sentiment analysis model. The preprocessing steps include:
-
-- **Noise Removal:** Eliminate irrelevant information such as HTML tags, special characters, and stopwords.
-- **Tokenization:** Split text into individual words or phrases (tokens).
-- **Stemming and Lemmatization:** Reduce words to their base or root form to standardize text representations.
-
-## Model Training
-
-Train the sentiment analysis model using machine learning techniques. The steps involved are:
-
-1. **Feature Extraction:** Convert the preprocessed text into numerical features using methods like TF-IDF or word embeddings.
-2. **Model Selection:** Choose a suitable machine learning model, such as logistic regression, SVM, or a neural network.
-3. **Training:** Train the model on the preprocessed and feature-extracted data.
-4. **Hyperparameter Tuning:** Optimize the model parameters to achieve the best performance.
+## Model Implementation
+- **Random Forest Classifier**:
+  - Number of estimators: 200.
+  - Criterion: Entropy.
+  - Train the model on the transformed training dataset.
 
 ## Evaluation
+- Evaluate the model on the test dataset using:
+  - **Confusion Matrix**: Understand the performance of the classifier.
+  - **Accuracy Score**: Overall accuracy of the model.
+  - **Classification Report**: Precision, recall, and F1-score.
 
-Evaluate the trained model using various metrics to assess its performance. Key evaluation metrics include:
+## Usage
+### Dependencies
+Install the required Python libraries:
+```bash
+pip install pandas scikit-learn
+```
 
-- **Accuracy:** The proportion of correctly predicted instances.
-- **Precision, Recall, and F1-Score:** Metrics to evaluate the model's performance on positive and negative classes.
-- **Confusion Matrix:** A table to visualize the performance of the classification model.
+### Steps to Run
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/yourusername/stock-sentiment-analysis.git
+   cd stock-sentiment-analysis
+   ```
+2. Place the dataset file (`Data3.csv`) in the repository folder.
+
+3. Run the script:
+   ```bash
+   python sentiment_analysis.py
+   ```
+
+### Example Output
+Confusion Matrix:
+```
+[[25 10]
+ [ 5 30]]
+```
+Accuracy Score:
+```
+0.85
+```
+Classification Report:
+```
+              precision    recall  f1-score   support
+
+           0       0.83      0.89      0.86        35
+           1       0.86      0.79      0.82        38
+
+    accuracy                           0.85        73
+   macro avg       0.85      0.84      0.84        73
+weighted avg       0.85      0.85      0.85        73
+```
 
